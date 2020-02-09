@@ -13,10 +13,17 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import ru.sbrf.emoAuth.Authentication;
 import ru.sbrf.emoAuth.Request.LoginRequest;
 import ru.sbrf.emoAuth.Request.LoginResponse;
+import ru.sbrf.emoAuth.dto.ViewDto;
+import ru.sbrf.emoAuth.entity.View;
+import ru.sbrf.emoAuth.mapper.ViewMapper;
+import ru.sbrf.emoAuth.repo.ComponentRepository;
+import ru.sbrf.emoAuth.repo.ViewRepository;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Controller
 @Log
@@ -24,6 +31,12 @@ public class LoginController {
 
     @Autowired
     Authentication authentication;
+    @Autowired
+    ViewRepository viewRepository;
+    @Autowired
+    ComponentRepository componentRepository;
+    @Autowired
+    ViewMapper viewMapper;
 
     public LoginController() {}
 
@@ -55,5 +68,18 @@ public class LoginController {
             log.info("postLoginController: User not found");
             return new ResponseEntity("User not found",HttpStatus.UNAUTHORIZED);
         }
+    }
+
+    @PostMapping ("/views")
+    @ResponseBody
+    public ResponseEntity postViewsController() {
+
+        Iterable<View> views = viewRepository.findAll();
+        Set<ViewDto> viewDtoSet = new HashSet<>();
+
+        for( View view : views)
+            viewDtoSet.add(viewMapper.viewToViewDto(view));
+
+        return new ResponseEntity(viewDtoSet, HttpStatus.OK);
     }
 }

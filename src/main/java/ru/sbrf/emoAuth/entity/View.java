@@ -14,12 +14,22 @@ public class View {
     private String name;
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
-    @JoinTable(name = "view_on",
+    @JoinTable(name = "view_on_comp",
             joinColumns = @JoinColumn(name="view_id"),
             inverseJoinColumns = @JoinColumn(name="component_id"))
     private Set<Component> onComponents;
 
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
+    @JoinTable(name = "view_off_comp",
+            joinColumns = @JoinColumn(name="view_id"),
+            inverseJoinColumns = @JoinColumn(name="component_id"))
+    private Set<Component> offComponents;
 
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
+    @JoinTable(name = "view_disabled_comp",
+            joinColumns = @JoinColumn(name="view_id"),
+            inverseJoinColumns = @JoinColumn(name="component_id"))
+    private Set<Component> disabledComponents;
 
 
 //

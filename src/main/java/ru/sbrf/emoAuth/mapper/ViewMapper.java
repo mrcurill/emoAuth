@@ -11,10 +11,11 @@ import java.util.Set;
 
 @Mapper (componentModel = "spring")
 public abstract class ViewMapper {
-
     @Mappings({
             @Mapping(source = "name", target = "name"),
-            @Mapping(source = "onComponents", target = "on")
+            @Mapping(source = "onComponents", target = "on"),
+            @Mapping(source = "offComponents", target = "off"),
+            @Mapping(source = "disabledComponents", target = "disabled")
     })
     public abstract ViewDto viewToViewDto(View view);
 

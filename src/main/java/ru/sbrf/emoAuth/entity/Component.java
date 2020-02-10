@@ -17,6 +17,12 @@ public class Component {
     @ManyToMany(mappedBy = "onComponents")
     private Set<View> onViews;
 
+    @ManyToMany(mappedBy = "offComponents")
+    private Set<View> offViews;
+
+    @ManyToMany(mappedBy = "disabledComponents")
+    private Set<View> disabledViews;
+
     @Override
     public String toString() {
         return name;

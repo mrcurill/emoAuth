@@ -1,7 +1,6 @@
 package ru.sbrf.emoAuth.Request;
 
 import lombok.Data;
-import org.springframework.validation.ObjectError;
 
 import java.util.List;
 

@@ -13,8 +13,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import ru.sbrf.emoAuth.Authentication;
 import ru.sbrf.emoAuth.Request.LoginRequest;
 import ru.sbrf.emoAuth.Request.LoginResponse;
+import ru.sbrf.emoAuth.dto.ComponentDto;
 import ru.sbrf.emoAuth.dto.ViewDto;
+import ru.sbrf.emoAuth.entity.Component;
 import ru.sbrf.emoAuth.entity.View;
+import ru.sbrf.emoAuth.mapper.ComponentMapper;
 import ru.sbrf.emoAuth.mapper.ViewMapper;
 import ru.sbrf.emoAuth.repo.ComponentRepository;
 import ru.sbrf.emoAuth.repo.ViewRepository;
@@ -37,6 +40,8 @@ public class LoginController {
     ComponentRepository componentRepository;
     @Autowired
     ViewMapper viewMapper;
+    @Autowired
+    ComponentMapper componentMapper;
 
     public LoginController() {}
 
@@ -81,5 +86,18 @@ public class LoginController {
             viewDtoSet.add(viewMapper.viewToViewDto(view));
 
         return new ResponseEntity(viewDtoSet, HttpStatus.OK);
+    }
+
+    @PostMapping ("/components")
+    @ResponseBody
+    public ResponseEntity postComponentsController() {
+
+        Iterable<Component> components = componentRepository.findAll();
+        Set<ComponentDto> componentDtoSet = new HashSet<>();
+
+        for( Component component : components)
+            componentDtoSet.add(componentMapper.componentToComponentDto(component));
+
+        return new ResponseEntity(componentDtoSet, HttpStatus.OK);
     }
 }

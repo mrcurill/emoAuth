@@ -22,9 +22,12 @@ create table component (
 
 insert into component (name) values ('component1');
 insert into component (name) values ('component2');
+insert into component (name) values ('component3');
+insert into component (name) values ('component4');
+insert into component (name) values ('component5');
 
 
-create table view_on (
+create table view_on_comp (
     id identity not null primary key,
     view_id bigint not null ,
     component_id bigint not null,
@@ -34,7 +37,35 @@ create table view_on (
       REFERENCES component (id)
 );
 
-insert into view_on (view_id,component_id) values (1,1);
-insert into view_on (view_id,component_id) values (1,2);
-insert into view_on (view_id,component_id) values (2,1);
+insert into view_on_comp (view_id,component_id) values (1,1);
+insert into view_on_comp (view_id,component_id) values (1,2);
+insert into view_on_comp (view_id,component_id) values (2,1);
 
+
+create table view_off_comp (
+    id identity not null primary key,
+    view_id bigint not null ,
+    component_id bigint not null,
+    CONSTRAINT FK2_VIEW_ID FOREIGN KEY (view_id)
+      REFERENCES view (id),
+    CONSTRAINT FK2_COMPONENT_ID FOREIGN KEY (component_id)
+      REFERENCES component (id)
+);
+
+insert into view_off_comp (view_id,component_id) values (1,3);
+insert into view_off_comp (view_id,component_id) values (1,4);
+insert into view_off_comp (view_id,component_id) values (2,3);
+
+create table view_disabled_comp (
+    id identity not null primary key,
+    view_id bigint not null ,
+    component_id bigint not null,
+    CONSTRAINT FK3_VIEW_ID FOREIGN KEY (view_id)
+      REFERENCES view (id),
+    CONSTRAINT FK3_COMPONENT_ID FOREIGN KEY (component_id)
+      REFERENCES component (id)
+);
+
+insert into view_disabled_comp (view_id,component_id) values (1,5);
+insert into view_disabled_comp (view_id,component_id) values (2,4);
+insert into view_disabled_comp (view_id,component_id) values (2,5);

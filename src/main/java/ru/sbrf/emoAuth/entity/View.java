@@ -31,8 +31,6 @@ public class View {
             inverseJoinColumns = @JoinColumn(name="component_id"))
     private Set<Component> disabledComponents;
 
-
-//
 //    public void addOnComponent(Component component) {
 //        onComponents.add(component);
 //        component.getOnViews().add(this);

@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -99,5 +100,30 @@ public class LoginController {
             componentDtoSet.add(componentMapper.componentToComponentDto(component));
 
         return new ResponseEntity(componentDtoSet, HttpStatus.OK);
+    }
+
+    @PostMapping("/components/add")
+    @ResponseBody
+    public ResponseEntity postComponentAddController() {
+
+        View view = viewRepository.findByName("view2").get(0);
+        Component component = componentRepository.findByName("component2").get(0);
+
+        view.getOnComponents().add(component);
+        viewRepository.save(view);
+
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
+    @GetMapping("/components")
+    @ResponseBody
+    public ResponseEntity getComponentsController(String areaKey) {
+        return new ResponseEntity(viewMapper.viewToViewDto(viewRepository.findByName(areaKey).get(0)), HttpStatus.OK);
+    }
+
+    @GetMapping("/views")
+    @ResponseBody
+    public ResponseEntity getViewsController(String areaKey) {
+        return new ResponseEntity(componentMapper.componentToComponentDto(componentRepository.findByName(areaKey).get(0)),HttpStatus.OK);
     }
 }
